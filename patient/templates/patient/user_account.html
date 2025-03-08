@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}User Account Settings | Smart Health Emergency Assistant{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<section class="account-page">
+    <div class="container ml-5">
+        <h1 class="page-title text-center">Account Settings</h1>
+
+        <!-- Personal Information Section -->
+        <div class="settings-section">
+            <h2 class="section-title">Update Personal Information</h2>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="name" value="{{ patient.name }}" required placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" value="{{ patient.email }}" required placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="phone" value="{{ patient.phone }}" placeholder="Phone Number">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="address" value="{{ patient.address }}" placeholder="Address">
+                </div>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+
+        <!-- Password Change Section -->
+        <div class="settings-section">
+            <h2 class="section-title">Change Password</h2>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="password-toggle">
+                    <input type="password" id="current_password" name="current_password" required placeholder="Current Password">
+                    <span class="toggle-icon" onclick="togglePassword('current_password')">👁</span>
+                </div>
+                <div class="password-toggle">
+                    <input type="password" id="new_password" name="new_password" required placeholder="New Password">
+                    <span class="toggle-icon" onclick="togglePassword('new_password')">👁</span>
+                </div>
+                <div class="password-toggle">
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm New Password">
+                    <span class="toggle-icon" onclick="togglePassword('confirm_password')">👁</span>
+                </div>
+                <button type="submit" class="btn">Change Password</button>
+            </form>
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div class="settings-section">
+            <h2 class="section-title">Update Profile Picture</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="file" name="profile_picture" accept="image/*">
+                </div>
+                <button type="submit" class="btn">Upload Picture</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePassword(id) {
+        var input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
+</script>
+{% endblock %}

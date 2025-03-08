@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Driver Dashboard</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 12px; /* Smaller font size */
+        }
+
+        .dashboard-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f4f4f9;
+            height: 100vh; /* Full screen height */
+            box-sizing: border-box;
+        }
+
+        .info-container {
+            background-color: white;
+            padding: 15px;
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            text-align: left;
+            width: 25%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .info-container h1, .info-container h2 {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background-color: #fef9e4;
+            border: 1px solid #ffcc00;
+            border-radius: 5px;
+            margin: 8px 0;
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .info-container p {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        #map {
+            height: 100%; /* Full screen map */
+            width: 75%;
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+        }
+
+        .distance-info {
+            background-color: #e4f9e4;  /* Green background for distance */
+            border: 1px solid #4caf50;  /* Green border */
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #4caf50;  /* Green text color */
+        }
+
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center; padding: 10px; margin: 0;">Ambulance Driver Dashboard</h2>
+    
+    <div class="dashboard-container">
+        <div class="info-container">
+            <h1>Driver Information</h1>
+            <div class="info-box">
+                <p><strong>Name:</strong> {{ driver.first_name }} {{ driver.last_name }}</p>
+                <p><strong>Phone:</strong> {{ driver.phone_number }}</p>
+                <p><strong>Email:</strong> {{ driver.email }}</p>
+                <p><strong>License:</strong> {{ driver.license_number }}</p>
+                <p><strong>Hospital:</strong> {{ driver.hospital.name }}</p>
+            </div>
+
+            <h2>Patient Information</h2>
+            <div class="info-box">
+                <p><strong>Patient Name:</strong> Unisha Chaulagain</p>
+                
+                <p><strong>Location:</strong> Himalaya College of Engineering, Kathmandu</p>
+                <p><strong>Emergency Contact: 9865338866</strong> {{ patient.emergency_contact }}</p>
+            </div>
+
+            <div class="distance-info" id="distance-info">
+                <!-- Distance will be dynamically updated here -->
+            </div>
+        </div>
+        
+        <div id="map"></div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Leaflet Routing Machine JS -->
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        // Hospital coordinates
+        var hospitalLat = {{ driver.hospital.latitude }};
+        var hospitalLng = {{ driver.hospital.longitude }};
+        
+        // Patient coordinates (Himalaya College of Engineering)
+        var patientLat = 27.7028;  // Himalaya College of Engineering latitude
+        var patientLng = 85.2855;  // Himalaya College of Engineering longitude
+
+        // Create the map centered on the hospital location
+        var map = L.map('map').setView([hospitalLat, hospitalLng], 13); 
+
+        // Add OpenStreetMap tiles to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add hospital marker to the map
+        L.marker([hospitalLat, hospitalLng]).addTo(map)
+            .bindPopup("<b>{{ driver.hospital.name }}</b>")
+            .openPopup();
+
+        // Add patient marker to the map (Himalaya College of Engineering) with a red marker
+        var patientIcon = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Red_marker.svg/1200px-Red_marker.svg.png',  // Red marker icon
+            iconSize: [25, 41], 
+            iconAnchor: [12, 41]
+        });
+        
+        L.marker([patientLat, patientLng], {icon: patientIcon}).addTo(map)
+            .bindPopup("<b>Patient Location</b><br>Himalaya College of Engineering, Kathmandu");
+
+        // Function to calculate distance between two lat/long coordinates using Haversine formula
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the Earth in km
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var distance = R * c; // Distance in km
+            return distance;
+        }
+
+        // Calculate the distance
+        var distance = calculateDistance(hospitalLat, hospitalLng, patientLat, patientLng);
+        
+        // Update the distance info on the page
+        document.getElementById('distance-info').innerHTML = "Distance from Hospital to Patient Location: " + distance.toFixed(2) + " km";
+
+        // Use Leaflet Routing Machine to find the shortest route and display it with black color
+        var routeControl = L.Routing.control({
+            waypoints: [
+                L.latLng(hospitalLat, hospitalLng),
+                L.latLng(patientLat, patientLng)
+            ],
+            routeWhileDragging: true,
+            lineOptions: {
+                styles: [{ color: 'black', weight: 5, opacity: 0.7 }] // Black color for route
+            }
+        }).addTo(map);
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'hospital_base.html' %}
+{% load static %}
+
+{% block title %}Hospital Dashboard | Smart Health Emergency Assistant{% endblock %}
+
+{% block content %}
+<section class="home">
+    <div class="text">Welcome to <strong>{{ hospital.name }}</strong></div>
+    <div class="dashboard-container">
+        <div class="dashboard-section">
+            <h2>Hospital Information</h2>
+            <p><strong>Hospital Name:</strong> {{ hospital.name }}</p>
+            <p><strong>Address:</strong> {{ hospital.address }}</p>
+            <p><strong>Email:</strong> {{ hospital.email }}</p>
+            <p><strong>PAN Number:</strong> {{ hospital.pan_number }}</p>
+            <p><strong>Website:</strong>
+                {% if hospital.website %}
+                    <a href="{{ hospital.website }}" target="_blank">{{ hospital.website }}</a>
+                {% else %} N/A {% endif %}
+            </p>
+            <p><strong>Description:</strong> {{ hospital.description|default:"No description provided." }}</p>
+        </div>
+
+        <div class="right-dashboard-section">
+            <div class="actions-container">
+                <h2>Emergency Actions</h2>
+                <a href="{% url 'hospital:manage_ambulances' %}" class="btn emergency-btn">
+                    🚑 Manage Ambulances
+                </a>
+                <h2>Notifications</h2>
+                <a href="{% url 'hospital:notifications' %}" class="btn">
+                    📬 View Notifications
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Dashboard | Smart Health Emergency Assistant{% endblock %}
+
+{% block content %}
+<style>
+    /* General Styling */
+    body {
+        background-color: #f6f5fc; /* Light purple background for a calm, modern feel */
+        color: #333; /* Dark text for better contrast */
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .home {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .text {
+        font-size: 28px;
+        margin-bottom: 40px;
+        color: #4a148c; /* Deep purple text */
+        font-weight: 700;
+    }
+
+    .text strong {
+        color: #6a1b9a; /* Dark purple for Ritika Dahal */
+    }
+
+    .dashboard-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        max-width: 1200px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* Make both sections take half the space */
+    .dashboard-section {
+        background: #f2e7fe; /* Light purple background inside the sections */
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        flex: 1 1 calc(50% - 40px);
+        min-width: 320px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dashboard-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-section h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        color: #4a148c; /* Deep purple for headings */
+        font-weight: 700;
+    }
+
+    .patient-info p {
+        margin: 12px 0;
+        font-size: 18px;
+        color: #555;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 14px 28px;
+        background-color: #4a148c; /* Deep purple button */
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 18px;
+        display: inline-block;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+        background-color: #6a1b9a;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .emergency-btn {
+        background-color: #e53935; /* Red for emergency button */
+    }
+
+    .emergency-btn:hover {
+        background-color: #d32f2f;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .hospital-btn {
+        background-color: #8e24aa; /* Purple button for hospitals */
+    }
+
+    .hospital-btn:hover {
+        background-color: #7b1fa2;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .dashboard-section {
+            flex: 1 1 100%;
+            margin-bottom: 30px;
+        }
+    }
+</style>
+
+<section class="home">
+    <div class="text">Welcome, <strong>Ritika Dahal</strong>!</div>
+
+    <div class="dashboard-container">
+        <!-- Patient Information Section (Left Half) -->
+        <div class="dashboard-section">
+            <h2>Your Information</h2>
+            <div class="patient-info">
+                <p><strong>Name:</strong> {{ patient.name }}</p>
+                <p><strong>Age:</strong> {{ patient.age }}</p>
+                <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                <p><strong>Blood Type:</strong> {{ patient.blood_type }}</p>
+                <p><strong>Primary Care Physician:</strong> {{ patient.primary_care_physician }}</p>
+            </div>
+        </div>
+
+        <!-- Emergency Actions and Hospital Search (Right Half) -->
+        <div class="dashboard-section">
+            <h2>Emergency Actions</h2>
+            <a href="{% url 'ambulance' %}" class="btn emergency-btn">
+                🚑 Request Ambulance
+            </a>
+
+            <h2 style="margin-top: 40px;">Search Hospitals</h2>
+            <a href="{% url 'hospital' %}" class="btn hospital-btn">
+                🏥 Search Hospitals
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

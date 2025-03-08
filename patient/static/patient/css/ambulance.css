@@ -1,0 +1,70 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    display: flex;
+    height: 100vh;  /* Full screen height */
+}
+
+/* Left Section: Search Bar and Nearest Hospitals */
+#search-container {
+    width: 25%;  /* 25% for the search and hospital list */
+    background-color: #f0f4f8;
+    padding: 20px;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #d7bdf1;  /* Light purple color for search bar */
+    box-sizing: border-box; /* Ensures the padding doesn't affect width */
+}
+
+/* Right Section: Map */
+#map {
+    width: 75%;  /* 75% for the map */
+    height: 100vh;  /* Full height of the viewport */
+}
+
+/* Hospital Info Section */
+#hospital-info {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Hospital List Section */
+.hospital-list {
+    margin-top: 10px;
+}
+
+.hospital-item {
+    background: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.hospital-item:hover {
+    background: #c0c0c0;
+}
+
+.hospital-item .name {
+    font-weight: bold;
+}
+
+.hospital-item .distance {
+    font-size: 0.9em;
+    color: gray;
+}

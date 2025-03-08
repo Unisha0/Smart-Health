@@ -1,0 +1,318 @@
+{% load static %}
+<! DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ambulance Tracker</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'patient/css/ambulance.css' %}">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Left Section: Search Bar and Hospital List */
+    #search-container {
+      width: 25%;  /* 25% for search and hospital list */
+      background-color: #f0f4f8;
+      padding: 20px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow-y: auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      background-color: #d7bdf1;  /* Light purple */
+      box-sizing: border-box;
+    }
+
+    #hospital-info {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .hospital-list {
+      margin-top: 10px;
+    }
+
+    .hospital-item {
+      background: #e0e0e0;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .hospital-item:hover {
+      background: #c0c0c0;
+    }
+
+    .hospital-item .name {
+      font-weight: bold;
+    }
+
+    .hospital-item .distance {
+      font-size: 0.9em;
+      color: gray;
+    }
+
+    .request-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    .request-button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-size: 14px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <!-- Left Section: Search Bar and Hospital List -->
+    <div id="search-container">
+      <h2>Search Hospitals</h2>
+      <input type="text" id="hospital-search" placeholder="Enter hospital name, specialty (e.g., children, heart) or 'nearest'" oninput="searchHospital()">
+      <div id="hospital-info"></div>
+      <div id="nearest-hospitals" class="hospital-list"></div>
+      <div id="ambulance-request-message" class="message"></div>
+    </div>
+
+    <!-- Right Section: Map -->
+    <div id="map"></div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    // Initialize map with Kathmandu coordinates
+    var map = L.map('map').setView([27.7172, 85.3240], 13);
+
+    // Add OSM tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let hospitalsData = [];
+    let patientMarker;
+    let selectedHospital = null;  // Will store the hospital object when one is clicked
+
+    // Define icons
+    const hospitalIcon = L.icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [0, -41]
+    });
+
+    const patientIcon = L.icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [0, -41],
+      shadowSize: [41, 41]
+    });
+
+    // Fetch hospital data from backend (ensure your API returns all hospitals including their 'speciality' field)
+    fetch('/hospital/api/hospitals/')
+      .then(response => response.json())
+      .then(hospitals => {
+        hospitalsData = hospitals;
+        // Optionally, display markers for all hospitals
+        hospitals.forEach(hospital => {
+          L.marker([hospital.latitude, hospital.longitude], { icon: hospitalIcon })
+            .addTo(map)
+            .bindPopup(`<b>${hospital.name}</b><br>${hospital.address}<br><i>Speciality: ${hospital.speciality}</i>`);
+        });
+      })
+      .catch(error => console.error("Error loading hospitals:", error));
+
+    // Get patient's location and add a marker
+    function getPatientLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          if (patientMarker) map.removeLayer(patientMarker);
+          patientMarker = L.marker([lat, lon], { icon: patientIcon })
+            .addTo(map)
+            .bindPopup("<b>Your Location</b>")
+            .openPopup();
+          map.setView([lat, lon], 14);
+        }, function(error) {
+          alert("Error getting location: " + error.message);
+        });
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    }
+    getPatientLocation();
+
+    // Haversine formula to calculate distance between two points in km
+    function haversineDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371.0;
+      let dLat = (lat2 - lat1) * Math.PI / 180;
+      let dLon = (lon2 - lon1) * Math.PI / 180;
+      lat1 = lat1 * Math.PI / 180;
+      lat2 = lat2 * Math.PI / 180;
+      let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    // Function to search hospitals based on input
+    function searchHospital() {
+      let searchTerm = document.getElementById("hospital-search").value.toLowerCase();
+      
+      // Filter hospitals by name or speciality
+      let foundHospitals = hospitalsData.filter(hospital => 
+          hospital.name.toLowerCase().includes(searchTerm) ||
+          hospital.speciality.toLowerCase().includes(searchTerm)
+      );
+
+      if (searchTerm === "nearest") {
+        // If user types 'nearest', use all hospitalsData
+        foundHospitals = hospitalsData;
+        document.getElementById("hospital-info").innerHTML = "Nearest hospitals:";
+        findNearestHospitals(foundHospitals);
+      } else if (foundHospitals.length > 0) {
+        document.getElementById("hospital-info").innerHTML = `Showing results for: <b>${searchTerm}</b>`;
+        findNearestHospitals(foundHospitals);
+      } else {
+        document.getElementById("hospital-info").innerHTML = "No hospitals found.";
+        document.getElementById("nearest-hospitals").innerHTML = "";
+      }
+    }
+
+    // Function to sort and display the top 4 nearest hospitals from the given list
+    function findNearestHospitals(hospitals) {
+      let patientLat = patientMarker ? patientMarker.getLatLng().lat : 27.7172;
+      let patientLon = patientMarker ? patientMarker.getLatLng().lng : 85.3240;
+      let sortedHospitals = hospitals.map(hospital => {
+        let distance = haversineDistance(patientLat, patientLon, hospital.latitude, hospital.longitude);
+        return { ...hospital, distance: distance };
+      }).sort((a, b) => a.distance - b.distance);
+
+      let nearestHospitalsHTML = "";
+      sortedHospitals.slice(0, 4).forEach((hospital, index) => {
+        nearestHospitalsHTML += `
+          <div class="hospital-item" onclick="centerMapToHospital(${hospital.latitude}, ${hospital.longitude}, '${hospital.name}', '${hospital.id}')">
+              <div class="name">${index + 1}. ${hospital.name}</div>
+              <div class="distance">${hospital.distance.toFixed(2)} km</div>
+          </div>
+        `;
+      });
+      document.getElementById("nearest-hospitals").innerHTML = nearestHospitalsHTML;
+    }
+
+    // Function to center the map on the selected hospital and show the request button
+    function centerMapToHospital(lat, lon, name, id) {
+      map.setView([lat, lon], 14);
+      L.marker([lat, lon], { icon: hospitalIcon })
+        .addTo(map)
+        .bindPopup(`<b>${name}</b>`)
+        .openPopup();
+      
+      // Set the selected hospital for ambulance request
+      selectedHospital = { id: id, name: name, lat: lat, lon: lon };
+      // Show request ambulance button
+      document.getElementById("ambulance-request-message").innerHTML = `
+          <button class="request-button" onclick="requestAmbulance()">Request Ambulance</button>
+      `;
+    }
+
+    //function for request button of ambulance 
+    function requestAmbulance() {
+    if (!selectedHospital || !selectedHospital.id) {
+        alert("Please select a hospital first.");
+        return;
+    }
+
+    // Replace the fetch request with the success message container
+    document.getElementById("ambulance-request-message").innerHTML = `
+        <div style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #4CAF50;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            animation: fadeIn 0.5s ease-in-out;
+        ">
+            <span style="font-size: 30px; margin-right: 10px;">✔️</span>
+            <strong>Your request has been sent!</strong><br>
+            Ambulance will be on its way shortly.
+        </div>
+    `;
+    
+    // Optional: Hide the message after a few seconds
+    setTimeout(function() {
+        document.getElementById("ambulance-request-message").innerHTML = '';
+    }, 5000); // message disappears after 5 seconds
+}
+
+
+    // Function to retrieve the CSRF token from the cookies
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body styling */
+body {
+    background: linear-gradient(135deg, #a8e6cf, #dcedc1); /* Light green gradient background */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Login container styling */
+.login-container {
+    background-color: #ffffff;
+    color: #444;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+/* Title styling */
+.login-container h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #4caf50; /* Light green text for the title */
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Form styling */
+.login-form .form-group {
+    margin-bottom: 15px;
+}
+
+/* Input fields */
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Login button */
+.login-btn {
+    background-color: #4caf50; /* Light green button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background-color: #388e3c; /* Darker green on hover */
+}
+
+/* Add responsiveness */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+    }
+
+    .login-container h1 {
+        font-size: 1.5rem;
+    }
+}

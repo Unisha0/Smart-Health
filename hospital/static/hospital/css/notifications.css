@@ -1,0 +1,72 @@
+/* Notifications Page Styles */
+.home {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2C3E50;
+}
+
+.notification-bell {
+    position: relative;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.notification-bell .bx {
+    color: #2C3E50;
+}
+
+.notification-bell .notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.notifications-list {
+    margin-top: 20px;
+}
+
+.notification {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification p {
+    font-weight: bold;
+    color: #2C3E50;
+}
+
+.notification span {
+    display: block;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.notification .timestamp {
+    font-size: 12px;
+    color: #95a5a6;
+}
+
+.notification:hover {
+    background-color: #f4f6f7;
+    cursor: pointer;
+}

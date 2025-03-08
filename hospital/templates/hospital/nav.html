@@ -1,0 +1,50 @@
+<nav class="sidebar openNotificationBox">
+    <header>
+        <i class='bx bx-chevron-right toggle' ></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <li class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="text" placeholder="Search...">
+            </li>
+
+            <li class="nav-link">
+                <a href="{% url 'hospital:profile' %}">
+                    <i class="bx bx-hospital icon"></i>
+                    <span class="text nav-text">Hospital Profile</span>
+                </a>
+            </li>
+            <li class="nav-link">
+                <a href="{% url 'hospital:manage_ambulances' %}">
+                    <i class="bx bxs-ambulance icon"></i>
+                    <span class="text nav-text">Manage Ambulances</span>
+                </a>
+            </li>
+
+            <li class="nav-link">
+                <a href="{% url 'hospital:notifications' %}">
+                    <i class="bx bx-bell icon"></i>
+                    <span class="text nav-text">Notifications</span>
+                </a>
+            </li>
+
+            <li class="nav-link">
+                <a href="{% url 'hospital:help_and_support' %}">
+                    <i class="bx bx-help-circle icon"></i>
+                    <span class="text nav-text">Help & Support</span>
+                </a>
+            </li>
+        </div>
+
+        <div class="bottom-content">
+            <li>
+                <a href="{% url 'hospital:logout' %}">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text">Logout</span>
+                </a>
+            </li>
+        </div>
+    </div>
+</nav>

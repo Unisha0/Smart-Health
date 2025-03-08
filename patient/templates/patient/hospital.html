@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+
+{% block title %}Help & Support | Smart Health Emergency Assistant{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Grid Card Design</title>
+  <style>
+
+     body{
+        padding-left: 100px;
+     }
+    /* Grid Container */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columns */
+      grid-template-rows: repeat(4, 1fr); /* 4 rows */
+      gap: 20px; /* Space between cards */
+      padding: 20px;
+    }
+
+    /* Card Styling */
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+
+    .card-details {
+      padding: 15px;
+      background: #fff;
+    }
+
+    .card-details h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .card-details p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* Full Details on Hover */
+    .card-full-details {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: top 0.3s ease;
+    }
+
+    .card:hover .card-full-details {
+      top: 0;
+    }
+
+    .card-full-details p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .card-full-details a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+
+    .card-full-details a:hover {
+      background: #0056b3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="card-image">
+        <img src="https://www.facs.org/media/tkhenfqx/hero23julbullftarchives.png?rxy=0.5000937558597412338271141946,0.5&rnd=133409178290400000" alt="Bir Hospital">
+      </div>
+      <div class="card-details">
+        <h3>Bir Hospital</h3>
+        <p>Location: Kanti Path, Kathmandu</p>
+        <p>Speciality: General Surgery, Orthopedics, Neurosurgery, Urology, ENT</p>
+        <p>Contact: +977 1-4221988 / +977 1-4221119</p>
+      </div>
+      <div class="card-full-details">
+        <p>Bir Hospital's website, birhospital.gov.np, provides details on services, OPD schedules, emergency care, news, and academic programs, along with contact and inquiry options.</p>
+        <a href="https://birhospital.gov.np/np">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="card-image">
+        <img src="https://www.collegenp.com/uploads/2019/04/Civil-Service-Hospital-of-Nepal.jpg" alt="Civil Service Hospital of Nepal">
+      </div>
+      <div class="card-details">
+        <h3>Civil Service Hospital of Nepal</h3>
+        <p>Location: Minbhawan, Kathmandu</p>
+        <p>Speciality: Pulmonology, Oncology, General Surgery, Internal Medicine</p>
+        <p>Contact: +977 1-4793000</p>
+      </div>
+      <div class="card-full-details">
+      <p>A government hospital providing specialized services, with a focus on affordable care for public service employees and their families.</p>
+        <a href="https://csh.gov.np/en">Learn More</a>
+      </div>
+    </div>
+
+    
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="card-image">
+        <img src="https://www.bbhospital.com.np/Content/img/47f534f1-2ffe-4332-b5ba-16105ac7c707.JPG" alt="B & B Hospital">
+      </div>
+      <div class="card-details">
+        <h3>B & B Hospital</h3>
+        <p>Location: Gwarko, Lalitpur</p>
+        <p>Speciality: Orthopedics, Plastic Surgery, Gynecology, Psychiatry, ENT</p>
+        <p>Contact: +977 1-5533206 </p>
+      </div>
+      <div class="card-full-details">
+       <p>Offering a wide range of services with a focus on orthopedic care, plastic surgery, and mental health services. Known for its advanced healthcare technology and professional staff.
+    </p>
+        <a href="https://www.bbhospital.com.np/">Learn More</a>
+      </div>
+    </div>
+
+     <!-- Card 4-->
+     <div class="card">
+        <div class="card-image">
+          <img src="https://turantcall.com/storage/listing_banner/1713432578-303367183_420683766829833_1434556669240010402_n.jpg" alt="Alka Hospital">
+        </div>
+        <div class="card-details">
+          <h3>Alka Hospital</h3>
+          <p>Location: Jawalakhel, Lalitpur</p>
+          <p>Speciality: Dermatology, Urology, Pediatrics, Cardiology, ENT</p>
+          <p>Contact: +977 1-5522227
+        </p>
+        </div>
+        <div class="card-full-details">
+          <p>A well-established hospital with services across multiple specialties, focusing on affordable and accessible healthcare for all.
+        </p>
+            <a href="https://www.alkahospital.com/">Learn More</a>
+        </div>
+      </div>
+
+       <!-- Card 5 -->
+    <div class="card">
+        <div class="card-image">
+          <img src="https://mhl.gov.np/wp-content/uploads/2023/06/mhl-slidr2.jpg" alt="Patan Mental Hospital ">
+        </div>
+        <div class="card-details">
+          <h3>Patan Mental Hospital
+        </h3>
+          <p>Location: Lagankhel, Lalitpur </p>
+          <p>Speciality: Psychiatry, Psychological Counseling, Mental Health Care, Addiction Treatment</p>
+          <p>Contact: +977 1-5537024 / +977 1-5537011</p>
+        </div>
+        <div class="card-full-details">
+       <p>A leading mental health institution in Nepal, providing specialized services in psychiatry, counseling, and addiction treatment with both inpatient and outpatient care.</p>
+            <a href="https://mhl.gov.np/">Learn More</a>
+        </div>
+      </div>
+
+
+       <!-- Card 6 -->
+    <div class="card">
+        <div class="card-image">
+          <img src="https://www.hamrodoctor.com/image.php?src=/uploads/hospitals/5ae6f4bdf0c67.jpg&w=1000" alt="Nepal Cancer Hospital & Research Center">
+        </div>
+        <div class="card-details">
+          <h3>Nepal Cancer Hospital & Research Center</h3>
+          <p>Location: Harichowk, Lalitpur
+        </p>
+          <p>Speciality: Oncology, Chemotherapy, Radiotherapy, Surgical Oncology, Palliative Care
+        </p>
+        <p>Contact: +977 1-5523200 / +977 1-5523201
+        </p>
+        </div>
+        <div class="card-full-details">
+       <p>Nepal Cancer Hospital & Research Center is dedicated to providing comprehensive cancer care, including chemotherapy, radiotherapy, and surgical oncology. It also offers palliative care services and cancer research to improve treatment outcomes.</p>
+            <a href="https://www.nch.com.np/">Learn More</a>
+        </div>
+      </div>
+
+
+       <!-- Card 7 -->
+    <div class="card">
+        <div class="card-image">
+          <img src="https://noh.com.np/images/noh2.png" alt="Jorpati Orthopaedic Hospital
+          ">
+        </div>
+        <div class="card-details">
+          <h3>Jorpati Orthopaedic Hospital
+        </h3>
+          <p>Location: Jorpati, Kathmandu</p>
+          <p>Speciality: Orthopedics, Bone and Joint Surgery, Spine Surgery, Trauma Care</p>
+          <p>Contact: +977 1-4910324 / +977 1-4910325
+        </p>
+        </div>
+        <div class="card-full-details">
+        <p>
+            Jorpati Orthopaedic Hospital specializes in the treatment of bone and joint disorders, including trauma care and spine surgery. It provides comprehensive orthopedic care with advanced diagnostic and surgical treatments.
+        </p> 
+         <a href="https://noh.com.np/">Learn More</a>
+        </div>
+      </div>
+
+
+       <!-- Card 8 -->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://www.hamrodoctor.com/image.php?src=/uploads/hospitals/5b6d6a9f7853d.jpg&w=1000" alt="Nobel Hospital">
+        </div>
+        <div class="card-details">
+            <h3>Nobel Hospital</h3>
+            <p>Location: Sinamangal, Kathmandu</p>
+            <p>Speciality: General Medicine, Surgery, Cardiology, Orthopedics, Maternity</p>
+            <p>Contact: +977 1-4365888</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Nobel Hospital is a leading healthcare provider in Kathmandu, offering a wide range of services including general medicine, surgery, cardiology, orthopedics, and maternity care. It is known for its state-of-the-art facilities and patient-centered approach.
+            </p>
+            <a href="https://www.nobelmedicalcollege.com.np/">Learn More</a>
+
+        </div>
+    </div>
+    
+
+
+       <!-- Card 9 -->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://www.hamrodoctor.com/image.php?src=/uploads/hospitals/580debeeb40e7.jpg&w=1000" alt="Kirtipur Hospital">
+        </div>
+        <div class="card-details">
+            <h3>Kirtipur Hospital</h3>
+            <p>Location: Kirtipur, Kathmandu</p>
+            <p>Speciality: General Medicine, Surgery, Pediatrics, Gynecology, Orthopedics</p>
+            <p>Contact: +977 1-4332011</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Kirtipur Hospital is a well-established healthcare provider offering a wide range of medical services including general medicine, surgery, pediatrics, gynecology, and orthopedics. The hospital focuses on providing affordable, high-quality care to the community.
+            </p>
+            <a href="https://www.phectnepal.org/kirtipur-hospital/">Learn More</a>
+        </div>
+    </div>
+    
+
+       <!-- Card 10-->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://ocglobal.jp/wpdata/wp-content/uploads/2023/02/221108_Nepal_%E7%97%85%E9%99%A2_%E3%82%AD%E3%83%A3%E3%83%83%E3%83%81.jpg" alt="Paropakar Maternity & Women's Hospital">
+        </div>
+        <div class="card-details">
+            <h3>Paropakar Maternity & Women's Hospital</h3>
+            <p>Location: Thapathali, Kathmandu</p>
+            <p>Speciality: Maternity, Women's Health, Obstetrics, Gynecology</p>
+            <p>Contact: +977 1-4223906</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Paropakar Maternity & Women's Hospital is one of the leading hospitals in Nepal for maternity and women’s health. It offers specialized services in obstetrics, gynecology, and maternal care with a focus on affordable healthcare for women.
+            </p>
+            <a href="https://pmwh.gov.np/">Learn More</a>
+        </div>
+    </div>
+    
+
+
+       <!-- Card 11-->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://www.hamrodoctor.com/image.php?src=/uploads/hospitals/64bd076330d40.jpg&w=1000 " alt="Chhetrapati Free Clinic">
+        </div>
+        <div class="card-details">
+            <h3>Chhetrapati Free Clinic</h3>
+            <p>Location: Chhetrapati, Kathmandu</p>
+            <p>Speciality: General Medicine, Free Healthcare, Preventive Care</p>
+            <p>Contact: +977 1-4264196</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Chhetrapati Free Clinic is a community-driven healthcare facility that provides free medical services, including general medicine and preventive care. It focuses on offering affordable and accessible healthcare to underserved populations.
+            </p>
+            <a href="https://chhatrapatihospital.com/">Learn More</a>
+        </div>
+    </div>
+    
+
+
+       <!-- Card 12 -->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://sahidhospitalkalanki.com/uploads/banner_image/1692425205_WhatsApp%20Image%202023-08-19%20at%2011.46.18.jpeg" alt="Sahid Memorial Hospital">
+        </div>
+        <div class="card-details">
+            <h3>Sahid Memorial Hospital</h3>
+            <p>Location: Gairidhara, Kathmandu</p>
+            <p>Speciality: General Medicine, Surgery, Maternity, Pediatrics, Orthopedics</p>
+            <p>Contact: +977 1-4421019</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Sahid Memorial Hospital provides a wide range of medical services including general medicine, surgery, maternity care, pediatrics, and orthopedics. It is committed to delivering quality healthcare to the community with a patient-centered approach.
+            </p>
+            <a href="https://sahidhospitalkalanki.com/">Learn More</a>
+        </div>
+    </div>
+    
+
+
+       <!-- Card 13-->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://www.nkc.org.np/uploads/pages/page_1508330295.jpg" alt="National Kidney Center">
+        </div>
+        <div class="card-details">
+            <h3>National Kidney Center</h3>
+            <p>Location: Kalimati, Kathmandu</p>
+            <p>Speciality: Nephrology, Dialysis, Kidney Transplant, Kidney Disease Management</p>
+            <p>Contact: +977 1-4373544</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                National Kidney Center is dedicated to the treatment and management of kidney-related diseases. The hospital specializes in nephrology, dialysis services, kidney transplants, and comprehensive kidney disease management.
+            </p>
+            <a href="https://www.nkc.org.np/">Learn More</a>
+        </div>
+    </div>
+    
+
+
+
+       <!-- Card 14 -->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://nepalkhoja.s3.us-east-2.amazonaws.com/4c85aadf098faa84dc2422eb3c2e3b63-536.jpg" alt="Kathmandu Model Hospital">
+        </div>
+        <div class="card-details">
+            <h3>Kathmandu Model Hospital</h3>
+            <p>Location: Chhetrapati, Kathmandu</p>
+            <p>Speciality: General Medicine, Surgery, Cardiology, Pediatrics, Orthopedics</p>
+            <p>Contact: +977 1-4263125</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Kathmandu Model Hospital offers a wide range of healthcare services, including general medicine, surgery, cardiology, pediatrics, and orthopedics. It is known for its commitment to providing affordable and quality healthcare.
+            </p>
+            <a href="https://www.hamrodoctor.com/hospital/kathmandu-model-hospital">Learn More</a>
+        </div>
+    </div>
+    
+
+
+       <!-- Card 15-->
+       <div class="card">
+        <div class="card-image">
+            <img src="https://annapurnahospital.com.np/uploads/service/1687248516.JPG" alt="Annapurna Neurological Institute">
+        </div>
+        <div class="card-details">
+            <h3>Annapurna Neurological Institute</h3>
+            <p>Location: Baghbazar, Kathmandu</p>
+            <p>Speciality: Neurology, Neurosurgery, Brain and Spine Care</p>
+            <p>Contact: +977 1-4223661</p>
+        </div>
+        <div class="card-full-details">
+            <p>
+                Annapurna Neurological Institute specializes in the diagnosis and treatment of neurological disorders, including brain and spine care, neurosurgery, and general neurology services.
+            </p>
+            <a href="https://ne.annapurnahospitals.com/">Learn More</a>
+        </div>
+    </div>
+    
+
+
+  </div>
+</body>
+</html>
+
+{% endblock %}

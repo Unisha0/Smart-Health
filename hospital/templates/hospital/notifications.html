@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/css/notifications.css' %}">
+    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+    <title>Notifications | Smart Health Emergency Assistant</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .notification-bell {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .header .notification-bell i {
+            font-size: 26px;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            padding: 3px 7px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Notification Dialog Box */
+        .dialog-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            text-align: center;
+            width: 350px;
+            display: none;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dialog-box.active {
+            display: block;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .dialog-header {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .dialog-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .dialog-button {
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dialog-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Notification Box */
+        .notification-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            z-index: 9999; /* Ensure it's above other content */
+        }
+
+        .notification-box.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            color: #4CAF50;
+        }
+
+        .notification-row {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .notification-row:hover {
+            background-color: #f9f9f9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .accept-reject-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .accept-reject-buttons a {
+            padding: 12px 20px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 30px;
+            width: 48%;
+            text-align: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .accept {
+            background-color: #28a745;
+        }
+
+        .reject {
+            background-color: #dc3545;
+        }
+
+        .accept:hover {
+            background-color: #218838;
+        }
+
+        .reject:hover {
+            background-color: #c82333;
+        }
+
+        /* Accepted Status */
+        .accepted-status {
+            font-size: 50px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .green-box {
+            background-color: #28a745;
+            color: white;
+            font-size: 14px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <section class="home">
+        <div class="header">
+            <div class="notification-bell" onclick="toggleNotifications()">
+                <i class="bx bx-bell"></i>
+                <span class="notification-count" id="notificationCount">1</span>
+            </div>
+        </div>
+
+        <!-- Notification Dialog Box -->
+        <div class="dialog-box" id="notificationDialog">
+            <div class="dialog-header">You Have New Notification</div>
+            <div class="dialog-content">
+                <p>You have one new emergency request!</p>
+                <a href="#" class="dialog-button" onclick="openNotificationBox()">View</a>
+            </div>
+        </div>
+
+        <!-- Notification box -->
+        <div class="notification-box" id="notificationBox">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="notification-row" onclick="toggleDetails('request1')">
+                        <td>Unisha Chaulagain</td>
+                        <td>unishachaulagai123@gmail.com</td>
+                        <td>9865338866</td>
+                        <td>Himalaya College Of Engineering , Chayasal, Lalitpur</td>
+                    </tr>
+                    <tr id="request1" class="hidden">
+                        <td colspan="4">
+                            <p><strong>🚑 Emergency Request</strong></p>
+                            <div class="accept-reject-buttons">
+                                <a href="#" class="accept" onclick="acceptRequest()">✅ Accept</a>
+                                <a href="#" class="reject">❌ Reject</a>
+                            </div>
+                            <div id="acceptedMessage" class="hidden accepted-status">
+                                Accepted
+                            </div>
+                            <div id="ambulanceNotification" class="hidden green-box">
+                                Notification sent !
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        function toggleNotifications() {
+            document.getElementById('notificationDialog').classList.toggle('active');
+        }
+
+        function openNotificationBox() {
+            document.getElementById('notificationDialog').classList.remove('active');
+            document.getElementById('notificationBox').classList.add('active');
+            document.getElementById('notificationCount').style.display = 'none';
+        }
+
+        function toggleDetails(id) {
+            var detailsRow = document.getElementById(id);
+            detailsRow.classList.toggle('hidden');
+        }
+
+        function acceptRequest() {
+            // Show "Accepted" message
+            document.getElementById('acceptedMessage').classList.remove('hidden');
+            // Show the green box to notify ambulance driver
+            document.getElementById('ambulanceNotification').classList.remove('hidden');
+            // Optionally, hide the accept/reject buttons if needed
+            var buttons = document.querySelectorAll('.accept-reject-buttons a');
+            buttons.forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>

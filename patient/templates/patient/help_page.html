@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Help & Support | Smart Health Emergency Assistant{% endblock %}
+
+{% block content %}
+<section class="help-page">
+    <div class="container ml-5">
+        <h1 class="page-title text-center">Help & Support</h1>
+
+        <div class="help-section">
+            <h2 class="section-title">How to Book an Ambulance</h2>
+            <p class="section-description">Booking an ambulance for emergency services is easy! Just follow these steps:</p>
+            <ol class="step-list">
+                <li><i class="fas fa-user"></i> Login to your account and visit the <strong>Ambulance</strong> section from the sidebar.</li>
+                <li><i class="fas fa-map-marker-alt"></i> Enter the necessary details like the type of emergency and your location.</li>
+                <li><i class="fas fa-hospital"></i> Select the hospital or choose your desired destination.</li>
+                <li><i class="fas fa-check-circle"></i> Click <strong>Book Ambulance</strong> to confirm your request.</li>
+                <li><i class="fas fa-phone-alt"></i> You will receive a confirmation, and an ambulance will be dispatched to your location.</li>
+            </ol>
+        </div>
+
+        <div class="help-section">
+            <h2 class="section-title">Hospital Information</h2>
+            <p class="section-description">For hospital-related information, follow these steps:</p>
+            <ul class="step-list">
+                <li><i class="fas fa-hospital-alt"></i> Visit the <strong>Hospital</strong> section from the sidebar.</li>
+                <li><i class="fas fa-hospital"></i> You will find a list of available hospitals that are affiliated with our service.</li>
+                <li><i class="fas fa-info-circle"></i> Click on the hospital to view its details such as contact info and services offered.</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2 class="section-title">Account Settings</h2>
+            <p class="section-description">To manage your account settings, follow these steps:</p>
+            <ul class="step-list">
+                <li><i class="fas fa-cogs"></i> Navigate to the <strong>Account Setting</strong> section in the sidebar.</li>
+                <li><i class="fas fa-edit"></i> Here, you can update your personal details, change your password, and configure notifications.</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-description">If you need further assistance, feel free to contact us:</p>
+            <ul class="contact-info">
+                <li><i class="fas fa-envelope"></i> Email: <a href="mailto:support@smarthealth.com">support@smarthealth.com</a></li>
+                <li><i class="fas fa-phone"></i> Phone: +123-456-7890</li>
+                <li><i class="fas fa-comments"></i> Live Chat: Available on the website</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

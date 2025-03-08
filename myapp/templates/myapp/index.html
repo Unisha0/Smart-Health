@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Health Emergency Assistant</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Hero Section - Dark Blue Gradient */
+        .hero {
+            background: linear-gradient(to right, #00416A, #E4E5E6);
+            color: white;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Custom Cards */
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            color: white;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Hospital - Light Green */
+        .hospital-card {
+            background-color: #90EE90;
+            color: black;
+        }
+
+        /* Patient - Medium Purple */
+        .patient-card {
+            background-color: #9370DB;
+        }
+
+        /* Ambulance - Light Yellow */
+        .ambulance-card {
+            background-color: #FFD700;
+            color: black;
+        }
+
+        /* Footer */
+        footer {
+            font-size: 14px;
+            background-color: #343a40;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Smart Health Emergency Assistant</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="display-4">Welcome to Smart Health Emergency Assistant</h1>
+            <p class="lead">Your one-stop solution for hospital, patient, and ambulance management.</p>
+            <p class="font-italic">"Finding the nearest hospital in emergency situations, with just a click."</p>
+            <a href="#services" class="btn btn-light btn-lg">Get Started</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 text-center">
+        <div class="container">
+            <h2 class="mb-4">About Us</h2>
+            <p>We provide an integrated platform for hospitals, patients, and ambulances to handle emergency situations efficiently. Our goal is to make healthcare services faster and more accessible. We are located in Kathmandu, Nepal, ready to support you during medical emergencies.</p>
+            <p class="font-italic">"In moments of crisis, every second counts. We're here to ensure help is always within reach."</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Services</h2>
+            <div class="row">
+                <!-- Hospital Signup/Login -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow hospital-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Hospital Admin</h5>
+                            <p class="card-text">Manage your hospital's emergency cases and patients.</p>
+                            <a href="/hospital/signup/" class="btn btn-dark">Sign Up as Hospital Admin</a>
+                            <a href="/hospital/login/" class="btn btn-light mt-2">Login as Hospital Admin</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Patient Signup/Login -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow patient-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Patient</h5>
+                            <p class="card-text">Sign up as a patient to access emergency services.</p>
+                            <a href="/patient/signup/" class="btn btn-dark">Sign Up as Patient Admin</a>
+                            <a href="/patient/login/" class="btn btn-light mt-2">Login as Patient Admin</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ambulance Signup/Login -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow ambulance-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Ambulance Service</h5>
+                            <p class="card-text">Join our ambulance service to provide emergency transport.</p>
+                            <a href="/shea/signup/" class="btn btn-dark">Sign Up as Ambulance Admin</a>
+                            <a href="/shea/login/" class="btn btn-light mt-2">Login as Ambulance Admin</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Services Info Section -->
+    <section id="emergency-services" class="py-5 text-center">
+        <div class="container">
+            <h2 class="mb-4">Emergency Services</h2>
+            <p class="lead">"In a medical emergency, every second matters. Our platform allows you to quickly search for the nearest hospital in Kathmandu to get immediate medical assistance."</p>
+            <p>Whether you're a patient or an ambulance service, we connect you to the right help, when you need it most.</p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 Smart Health Emergency Assistant. All rights reserved.</p>
+        <p>Contact us at <a href="mailto:assistantsmarthealth@gmail.com" class="text-white">assistantsmarthealth@gmail.com</a></p>
+        <p>Located in Kathmandu, Nepal</p>
+    </footer>
+
+    <!-- Bootstrap 5 JS, Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

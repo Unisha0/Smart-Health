@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'hospital/css/hospital_dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>{% block title %}Smart Health Emergency Assistant{% endblock %}</title>
+</head>
+
+<body>
+    {% include 'hospital/nav.html' %}
+
+    {% block content %}{% endblock %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.querySelector('body'),
+                sidebar = body.querySelector('.sidebar'),
+                toggle = body.querySelector(".toggle"),
+                searchBtn = body.querySelector(".search-box"),
+                modeSwitch = body.querySelector(".toggle-switch"),
+                modeText = body.querySelector(".mode-text");
+
+            toggle.addEventListener("click", () => {
+                sidebar.classList.toggle("close");
+            });
+
+            searchBtn.addEventListener("click", () => {
+                sidebar.classList.remove("close");
+            });
+
+            modeSwitch.addEventListener("click", () => {
+                body.classList.toggle("dark");
+
+                modeText.innerText = body.classList.contains("dark") ? "Light mode" : "Dark mode";
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+{% extends 'hospital_base.html' %}
+
+{% block title %}Help & Support | Hospital Admin{% endblock %}
+
+{% block content %}
+<section class="help-page">
+    <div class="container ml-5">
+        <h1 class="page-title text-center">Help & Support</h1>
+
+        <div class="help-section">
+            <h2 class="section-title">Managing Ambulance Requests</h2>
+            <p class="section-description">Follow these steps to manage ambulance requests efficiently:</p>
+            <ol class="step-list">
+                <li><i class="fas fa-user"></i> Login to your hospital admin account and go to the <strong>Ambulance Requests</strong> section.</li>
+                <li><i class="fas fa-list"></i> View the list of pending and active requests.</li>
+                <li><i class="fas fa-check-circle"></i> Accept or decline requests based on availability.</li>
+                <li><i class="fas fa-truck-medical"></i> Assign an ambulance and update its status.</li>
+            </ol>
+        </div>
+
+        <div class="help-section">
+            <h2 class="section-title">Updating Hospital Information</h2>
+            <p class="section-description">Keep hospital details up to date with these steps:</p>
+            <ul class="step-list">
+                <li><i class="fas fa-hospital"></i> Navigate to the <strong>Hospital Info</strong> section in the dashboard.</li>
+                <li><i class="fas fa-edit"></i> Update contact details, available departments, and service hours.</li>
+                <li><i class="fas fa-save"></i> Click <strong>Save</strong> to apply changes.</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2 class="section-title">Managing Doctor Schedules</h2>
+            <p class="section-description">To update and manage doctors' schedules:</p>
+            <ul class="step-list">
+                <li><i class="fas fa-user-md"></i> Go to the <strong>Doctor Management</strong> section.</li>
+                <li><i class="fas fa-calendar-alt"></i> Update availability, shifts, and appointment slots.</li>
+                <li><i class="fas fa-check"></i> Save changes to update the live schedule.</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2 class="section-title">Contact Support</h2>
+            <p class="section-description">For further assistance, contact us:</p>
+            <ul class="contact-info">
+                <li><i class="fas fa-envelope"></i> Email: <a href="mailto:hospital-support@smarthealth.com">hospital-support@smarthealth.com</a></li>
+                <li><i class="fas fa-phone"></i> Phone: +123-456-7891</li>
+                <li><i class="fas fa-comments"></i> Live Chat: Available on the admin dashboard</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    .help-page {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .container {
+        width: 75%; /* Take up 75% of the available space */
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-left: 25%; /* Add 25% margin on the left side to not overlap the sidebar */
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .help-section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .section-description {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .step-list {
+        list-style-type: decimal;
+        margin-left: 20px;
+    }
+
+    .step-list li {
+        margin-bottom: 8px;
+    }
+
+    .step-list i {
+        margin-right: 10px;
+    }
+
+    .contact-info {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .contact-info li {
+        margin-bottom: 8px;
+    }
+
+    .contact-info i {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,121 @@
+<nav class="sidebar close">
+    <header>
+
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <!-- Search Box Section -->
+            <li class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="text" id="search-input" placeholder="Search..." onkeyup="searchFunction()">
+            </li>
+
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a href="{% url 'patient_dashboard' %}">
+                        <i class="bx bx-user-circle icon"></i>
+                        <span class="text nav-text"> Profile - {{ patient.name }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="{% url 'ambulance' %}">
+                        <i class="bx bxs-ambulance icon"></i>
+                        <span class="text nav-text"> Ambulance</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="{% url 'hospital' %}">
+                        <i class="bx bx-heart icon"></i>
+                        <span class="text nav-text"> Hospital</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="{% url 'patient_history' %}">
+                        <i class='bx bx-folder icon'></i>
+                        <span class="text nav-text"> Medical History</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="{% url 'user_account' %}">
+                        <i class='bx bx-cog icon'></i>
+                        <span class="text nav-text"> Account Settings</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="{% url 'help_page' %}">
+                        <i class='bx bx-help-circle icon'></i>
+                        <span class="text nav-text"> Help</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li>
+                <a href="{% url 'logout' %}">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text"> Logout</span>
+                </a>
+            </li>
+
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+                <span class="mode-text text"> Dark mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Handle the sidebar toggle
+    const body = document.querySelector('body'),
+        sidebar = body.querySelector('nav'),
+        toggle = body.querySelector(".toggle"),
+        searchInput = document.getElementById('search-input');
+
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+    });
+
+    // Search function to filter through the list (simulating JSON data)
+    function searchFunction() {
+        let filter = searchInput.value.toLowerCase();
+        let links = document.querySelectorAll('.menu-links .nav-link');
+
+        links.forEach(link => {
+            let text = link.querySelector('.nav-text').textContent || link.querySelector('.nav-text').innerText;
+            if (text.toLowerCase().includes(filter)) {
+                link.style.display = "block";
+            } else {
+                link.style.display = "none";
+            }
+        });
+    }
+
+    // Dark Mode Toggle
+    const modeSwitch = body.querySelector(".toggle-switch"),
+          modeText = body.querySelector(".mode-text");
+
+    modeSwitch.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        if (body.classList.contains("dark")) {
+            modeText.innerText = "Light mode";
+        } else {
+            modeText.innerText = "Dark mode";
+        }
+    });
+</script>
